@@ -26,7 +26,35 @@ class Inventory:
         return self.tableName
     #view inventory function
     def viewInventory(self):
-        return 0
+            try:
+                connection = sqlite3.connect("Inventory.db")
+
+                print("Successful connection.")
+
+            except:
+                print("Failed connection.")
+
+            ## exits the program if unsuccessful
+                sys.exit()
+                
+            print()
+            ## cursor to send queries through
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM books")
+
+
+            result = cursor.fetchall()
+            for x in result:
+   
+                print("ISBN:", x[0],"Title:", x[1], "\tAuthor:", x[2] ) ## only the ISBN
+                print("\n")
+
+
+            ## close the cursor and connection once you're done
+            cursor.close()
+            connection.close()
+            return 0
+    
     #search Inventory function
     def searchInventory(self):
         return 0
