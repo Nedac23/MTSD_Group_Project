@@ -75,9 +75,24 @@ class Inventory:
         print()
         ## cursor to send queries through
         cursor = connection.cursor()
+
+        title = input("Please enter the title of the book you would like to search for: ")
+        query = "SELECT * FROM books WHERE Title =? "
+        data = (title,)
+        cursor.execute(query, data)
+        
+        result = cursor.fetchall()
+        if(len(result) == 0):
+            print("Nothing Found") 
+        else:
+            for x in result:
+                if(x[1] == title):
+                    print("Title: ", x[1]) 
+                    print("\n")
+     
         cursor.close()
         connection.close()
-          
+    
         return 0
 
     #decrease stock function
