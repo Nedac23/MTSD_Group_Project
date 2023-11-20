@@ -3,14 +3,13 @@ import sys
 
 class User:
     
-    #constructor
+    #constructors
     def __init__(self):
         self.databaseName = ""
         self.tableName = ""
         self.userID = ""
         self.loggedIn = False
         
-    #destructor
     def __init__(self, databaseName, tableName):
         self.databaseName = databaseName
         self.tableName = tableName
@@ -42,9 +41,8 @@ class User:
         #test connection to database
         try:
             connection = sqlite3.connect(self.databaseName)
-
             print("Successful connection.")
-
+            
         except:
             print("Failed connection.")
 
@@ -59,11 +57,20 @@ class User:
         
         print("Please enter the information for your new account.\n")
         
+        passwordCheck = True
+        
         while correct != "Y":
             first = input("First Name: ")
             last = input("Last Name: ")
             email = input("Email: ")
             password = input("Password: ")
+            #Checks if password is already in use
+            while passwordCheck == True:  
+                cursor.execute(f"SELECT Password FROM Users")
+                result = cursor.fetchall()
+                passwordCheck = password in result
+                if not passwordCheck:
+                    password = input("Password taken. Please create a different password: ")
         
             address = input("Street Address: ")
             city = input("City: ")
@@ -71,6 +78,7 @@ class User:
             zipcode = input("Zip Code: ")
             payment = input("Payment Method: ")
             
+            #Gives user option to change account info before confirmation
             correct = input("Has all your information been entered correctly? (Y/N) ")
             
             while correct != "Y" and correct != "N":
@@ -89,10 +97,15 @@ class User:
         #validates
         self.loggedIn = True
         
-        query = "SELECT UserID FROM Users WHERE FirstName =? AND LastName =? AND Password =?"
-        data = (first, last, password,)
+        cursor.close()
+        cursor = connection.cursor()
+        
+        query = "SELECT UserID FROM Users WHERE Password =?"
+        data = (password,)
+        cursor.execute(query,data)
+        result = cursor.fetchall()
         #stores the userID to the class
-        self.userID = cursor.fetchall()
+        self.userID = result[0]
         
         #closes the cursor and connection
         cursor.close()
@@ -102,9 +115,8 @@ class User:
         #test connection to database
         try:
             connection = sqlite3.connect(self.databaseName)
-
             print("Successful connection.")
-
+            
         except:
             print("Failed connection.")
 
@@ -119,13 +131,74 @@ class User:
         result = cursor.fetchall()
         #prints the results
         for x in result:
-
             print(f"""Name: {x[2]} {x[3]}
                   Email: {x[0]}
                   Password: {x[1]}
                   Address: {x[4]}, {x[5]}, {x[6]}, {x[7]}
                   Payment: {x[8]} \n""")
             
-        #close the cursor and connection
+        #closes the cursor and connection
         cursor.close()
         connection.close()
+        
+    def login(self):
+        #test connection to database
+        try:
+            connection = sqlite3.connect(self.databaseName)
+            print("Successful connection.")
+            
+        except:
+            print("Failed connection.")
+
+            #exit if unsuccessful
+            sys.exit()
+
+        cursor = connection.cursor()
+        
+        print("Please enter your email address and password to login.\n")
+
+        #login verification
+        email = input("Email Address: ")
+        password = input("Password: ")
+        
+        try:
+            query = "SELECT UserID FROM Users WHERE Email =? AND Password =?"
+            data = (email,password,)
+            cursor.execute(query,data)
+            result = cursor.fetchall()
+            
+            #stores the userID to the class
+            self.userID = result[0]
+            
+        except:
+            print("Email or Password is incorrect.")
+            
+            cursor.close()
+            connection.close()
+            return False
+
+        #closes the connection
+        cursor.close()
+        connection.close()
+
+        #validates 
+        self.loggedIn = True
+        return True
+    
+    def logout(self):
+        #test connection to database
+        try:
+            connection = sqlite3.connect(self.databaseName)
+            print("Successful connection.")
+            
+        except:
+            print("Failed connection.")
+
+            #exit if unsuccessful
+            sys.exit()
+
+        #resets login info
+        self.userID = ""
+        self.loggedIn = False
+        
+        return False
