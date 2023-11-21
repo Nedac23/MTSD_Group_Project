@@ -93,6 +93,9 @@ class User:
                 VALUES (?, ?, ?, ?, ?, ? ,? ,? ,?)""".replace('\n',' ')
         data = (email, password, first, last, address, city, state, zipcode, payment,)
         cursor.execute(query,data)
+
+        #commits changes
+        connection.commit()
         
         #validates
         self.loggedIn = True
