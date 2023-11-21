@@ -1,5 +1,7 @@
 import sqlite3
 import sys
+import Inventory
+
 
 
 # most of the sql code is just the stuff from the python databases example code directly 
@@ -7,24 +9,12 @@ import sys
 
 
 class Cart:
-    #initalizers and getters and setters
+    #initalizers 
     def __init__(self):
         self.database = ""
         self.table = ""
     def __init__(self, database="", table=""):
         self.database = database
-        self.table = table
-
-    def getdatabase(self):
-        return self.database
-
-    def gettable(self):
-        return self.table
-
-    def setdatabase(self, database):
-        self.database = database
-
-    def settable(self, table):
         self.table = table
 
     #real functions
@@ -97,11 +87,22 @@ class Cart:
 
             sys.exit()
 
-        cursor = connection.cursor()
+        fcursor = connection.cursor()
 
-        query = ("INSERT INTO Cart (userID, ISBN, Quantity) VALUES (?, ?, ?)")
-        data = (userID, ISBN, 1)
-        cursor.execute(query,data)
+        fquery = ("SELECT Quantity WHERE userID and ISBN = ?")
+        fdata = (userID, ISBN)
+        fcursor.execute(fquery,fdata)
+        result = fcursor.fetchall
+        fcursor.close()
+        cursor = connection.cursor()
+        if (result(0) > 0):
+            query = ("UPDATE cart SET Num =? Where ISBN =? and userId =?")
+            data = (result(0)+1,ISBN,userID)
+            cursor.execute(query,data)
+        else:
+            query = ("INSERT INTO Cart (userID, ISBN, Quantity) VALUES (?, ?, ?)")
+            data = (userID, ISBN, 1)
+            cursor.execute(query,data)
 
         connection.commit()
 
@@ -163,9 +164,9 @@ class Cart:
         invdata = (userID)
         cursor.execute(invquery,invdata)
         result = cursor.fetchall()
-
+        inv = Inventory()
         for x in result:
-            decreaseStock(x[0])
+            inv.decreaseStock(x[0])
         #idk how to do cross class stuff in python so for this moment im leaving it and doing it later
 
         
