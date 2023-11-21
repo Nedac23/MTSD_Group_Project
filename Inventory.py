@@ -97,6 +97,7 @@ class Inventory:
     #decrease stock function
     def decreaseStock(self, ISBN):
         #testing connection
+        stock_count = 0
         try:
                 connection = sqlite3.connect("Inventory.db")
 
@@ -125,7 +126,10 @@ class Inventory:
            #print(stock_count)
         
        #decreases the stock
-        stock_count = stock_count - 1
+        if(stock_count == 0):
+            stock_count = 0
+        else:
+            stock_count = stock_count - 1
        # print(stock_count)
 
        #updates the database with the new stock value
