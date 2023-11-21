@@ -1,6 +1,5 @@
 from inspect import _void
 import sqlite3
-import string
 import sys
 class Inventory:
     #zero consturctor
