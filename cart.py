@@ -66,9 +66,7 @@ class Cart:
         #with the isbn list, use code from inventory.py to see the actual data of what the isbns are books of and also relay their
         #quantity. x[0] should be isbn and x[1] should be quantity
         for x in result:
-            print(f"Title: 
-                  {x[0]},{x[1]}
-                  ")    
+            print(f"Title:  {x[0]},{x[1]}")    
 
 
         cursor.close()
@@ -167,7 +165,6 @@ class Cart:
         inv = Inventory()
         for x in result:
             inv.decreaseStock(x[0])
-        #idk how to do cross class stuff in python so for this moment im leaving it and doing it later
 
         
 
