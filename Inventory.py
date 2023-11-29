@@ -42,7 +42,7 @@ class Inventory:
             ## cursor to send queries through
             cursor = connection.cursor()
             #executing SQL Query
-            cursor.execute("SELECT * FROM books")
+            cursor.execute("SELECT * FROM Inventory")
 
             #Gets the results of the query
             result = cursor.fetchall()
@@ -77,7 +77,7 @@ class Inventory:
         cursor = connection.cursor()
 
         title = input("Please enter the title of the book you would like to search for: ")
-        query = "SELECT * FROM books WHERE Title =? "
+        query = "SELECT * FROM Inventory WHERE Title =? "
         data = (title,)
         cursor.execute(query, data)
         
@@ -115,7 +115,7 @@ class Inventory:
         cursor = connection.cursor()
 
         #selects the stock value using the ISBN since it is unique
-        query = "SELECT * FROM books WHERE ISBN =? "
+        query = "SELECT * FROM Inventory WHERE ISBN =? "
         data = (ISBN,)
         cursor.execute(query, data)
 
@@ -134,7 +134,7 @@ class Inventory:
        # print(stock_count)
 
        #updates the database with the new stock value
-        query = "UPDATE books SET Stock =? Where ISBN =? "
+        query = "UPDATE Inventory SET Stock =? Where ISBN =? "
         data = (stock_count, ISBN,)
         cursor.execute(query,data)
 

@@ -1,4 +1,4 @@
-CREATE TABLE `books` (
+CREATE TABLE `Inventory` (
   `ISBN` varchar(14) NOT NULL,
   `Title` varchar(50) DEFAULT NULL,
   `Author` varchar(50) DEFAULT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE `books` (
   `Stock` int(4) DEFAULT NULL
 );
 
-INSERT INTO `books` (`ISBN`, `Title`, `Author`, `Genre`, `Pages`,`ReleaseDate`,`Stock`) VALUES
+INSERT INTO `Inventory` (`ISBN`, `Title`, `Author`, `Genre`, `Pages`,`ReleaseDate`,`Stock`) VALUES
 ('978-0156028356', 'The Color Purple', 'Alice Walker', 'Epistolary', 304, '1982', 4),
 ('978-0307265432', 'The Road', 'Cormac McCarthy', 'Post apocalyptic fiction', 287,'September 26 2006', 1),
 ('978-0312424404', 'Gilead', 'Marilynne Robinson', 'Novel', 247, 'November 4, 2004', 7),
