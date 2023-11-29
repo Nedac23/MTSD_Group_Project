@@ -5,7 +5,8 @@ CREATE TABLE `Inventory` (
   `Genre` varchar(50) DEFAULT NULL,
   `Pages` int(4) DEFAULT NULL,
   `ReleaseDate` varchar(50) DEFAULT NULL,
-  `Stock` int(4) DEFAULT NULL
+  `Stock` int(4) DEFAULT NULL,
+   PRIMARY KEY(ISBN),
 );
 
 INSERT INTO `Inventory` (`ISBN`, `Title`, `Author`, `Genre`, `Pages`,`ReleaseDate`,`Stock`) VALUES
