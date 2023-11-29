@@ -48,24 +48,22 @@ class User:
 
             #exit if unsuccessful
             sys.exit()
-
-        cursor = connection.cursor()
         
         correct = ""
-        
-        #inputs (subject to change)
         
         print("Please enter the information for your new account.\n")
         
         passwordCheck = True
-        
+
+        #inputs
         while correct != "Y":
             first = input("First Name: ")
             last = input("Last Name: ")
             email = input("Email: ")
             password = input("Password: ")
             #Checks if password is already in use
-            while passwordCheck == True:  
+            while passwordCheck == True:
+                cursor = connection.cursor()
                 cursor.execute(f"SELECT Password FROM Users")
                 result = cursor.fetchall()
                 passwordCheck = password in result
@@ -86,8 +84,8 @@ class User:
             if correct == "N":
                 print("\nPlease reenter the information for your new account.\n")
         
-        
         #inserts into the table
+        cursor = connection.cursor()
         query = """INSERT INTO Users 
                 (Email, Password, FirstName, LastName, Address, City, State, Zip, Payment) 
                 VALUES (?, ?, ?, ?, ?, ? ,? ,? ,?)""".replace('\n',' ')
