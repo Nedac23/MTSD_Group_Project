@@ -3,7 +3,7 @@ import User
 import Cart  #also looking at her python example file she imported it as ->>    from {classname} import *
 
 #class declaration
-I = Inventory.Inventory("Inventory.db","books")    #looking at her python example file i don't think we need to do Class.Class
+I = Inventory.Inventory("Inventory.db","Inventory")    #looking at her python example file i don't think we need to do Class.Class
 C = Cart("Cart.db","Cart")
 user = User("User.db", "Users")
 #Before Login
