@@ -49,7 +49,7 @@ if(closed ==False):
         #view account information
 
         #menu option for inventory information
-        if(menu_option == 3):
+        if(menu_option == "3"):
             #After Login
             option = input("Please select a menu option:\n(0) View Inventory\n(1) Search Inventory\n(2) Go Back:  ")
             while(option != "2"):
@@ -61,11 +61,11 @@ if(closed ==False):
                     I.searchInventory()
                 option = input("Please select a menu option:\n(0) View Inventory\n(1) Search Inventory\n(2) Go Back:  ")
 
-        if(menu_option == 4):
+        if(menu_option == "4"):
             #AFTER LOGIN -- CART INFO
 
             ####ATTENTION
-            #need to change your option variable to cartoptions
+            #need to change your option variable to cartoptions and make the options strings
             cartoptions = input("Please select a menu option:\n(0) View Cart\n(1) Add Items to Cart\n(2) Remove an Item from Cart\n(3) Check Out\n(4) Go Back: ")
             while(cartoptions != 4):
                 if(option == 0):

@@ -43,17 +43,18 @@ class Inventory:
             cursor = connection.cursor()
             #executing SQL Query
             cursor.execute("SELECT * FROM Inventory")
-
+            print("Inventory: ")
+            
             #Gets the results of the query
             result = cursor.fetchall()
             #prints the results
             for x in result:
-                print("Inventory: ")
+                
                 print("\n")
-                print("ISBN:", x[0]," Title:", x[1], " Author:", x[2], "Genre:", x[3], "Pages:", x[4], "Release Date:", x[5], "Stock", x[6] ) 
-                print("\n")
+                print("ISBN:", x[0],", Title:", x[1], ", Author:", x[2], ", Genre:", x[3], ", Pages:", x[4], ", Release Date:", x[5], ", Stock: ", x[6] ) 
+               #S print("\n")
 
-
+            print("\n")
             ## close the cursor and connection once you're done
             cursor.close()
             connection.close()
@@ -85,11 +86,12 @@ class Inventory:
         if(len(result) == 0):
             print("Nothing Found") 
         else:
+            print("Results: \n")
             for x in result:
                 if(x[1] == title):
-                    print("Title: ", x[1]) 
+                    print("ISBN:", x[0],", Title:", x[1], ", Author:", x[2], ", Genre:", x[3], ", Pages:", x[4], ", Release Date:", x[5], ", Stock: ", x[6] ) 
                     print("\n")
-     
+       
         cursor.close()
         connection.close()
     
