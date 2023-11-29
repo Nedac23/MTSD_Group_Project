@@ -48,8 +48,9 @@ class Inventory:
             result = cursor.fetchall()
             #prints the results
             for x in result:
-   
-                print("ISBN:", x[0]," Title:", x[1], " Author:", x[2], " Stock", x[5] ) 
+                print("Inventory: ")
+                print("\n")
+                print("ISBN:", x[0]," Title:", x[1], " Author:", x[2], "Genre:", x[3], "Pages:", x[4], "Release Date:", x[5], "Stock", x[6] ) 
                 print("\n")
 
 
@@ -122,7 +123,7 @@ class Inventory:
         result = cursor.fetchall()
        #sets the result to the varibale stock_count
         for x in result:
-           stock_count = (x[5])
+           stock_count = (x[6])
            #print(stock_count)
         
        #decreases the stock
@@ -133,7 +134,7 @@ class Inventory:
        # print(stock_count)
 
        #updates the database with the new stock value
-        query = "UPDATE books SET Num =? Where ISBN =? "
+        query = "UPDATE books SET Stock =? Where ISBN =? "
         data = (stock_count, ISBN,)
         cursor.execute(query,data)
 
