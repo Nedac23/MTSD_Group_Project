@@ -78,14 +78,17 @@ if not closed:
             cartoptions = input("Please select a menu option:\n(0) View Cart\n(1) Add Items to Cart\n(2) Remove an Item from Cart\n(3) Check Out\n(4) Go Back: ")
             while cartoptions != "4":
                 if cartoptions == "0":
-                    C.viewcart(user.getUserID,I.getdatabaseName)
+                    C.viewcart(user.userID,I.databaseName)
+                    break
                 elif cartoptions == "1":
                     ad = input("Please type ISBN of book: ")
-                    C.additem(user.getUserID, ad)
+                    C.addtocart(user.userID, ad)
+                    break
                 elif cartoptions == "2":
                     re = input("Please type ISBN of book: ")
-                    C.additem(user.getUserID, re)
-                    C.removeitem
+                    C.removefromcart(user.userID, re)
+                    break
                 elif cartoptions == "3":
-                    C.checkout(user.getUserID)
+                    C.checkout(user.userID)
+                    break
 
