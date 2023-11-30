@@ -1,6 +1,6 @@
 import Inventory
 import User
-import Cart
+import cart
 
 #class declaration
 I = Inventory.Inventory("Inventory.db","Inventory")
