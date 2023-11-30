@@ -67,7 +67,7 @@ class User:
                 cursor.execute(f"SELECT Password FROM Users")
                 result = cursor.fetchall()
                 passwordCheck = password in result
-                if not passwordCheck:
+                if passwordCheck:
                     password = input("Password taken. Please create a different password: ")
         
             address = input("Street Address: ")
