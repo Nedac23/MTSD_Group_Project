@@ -13,7 +13,7 @@ class Cart:
     def __init__(self):
         self.database = ""
         self.table = ""
-    def __init__(self, database="", table=""):
+    def __init__(self, database, table):
         self.database = database
         self.table = table
 
