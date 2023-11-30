@@ -46,34 +46,24 @@ class Cart:
         invcursor = invconnection.cursor()
 
 
-
-
         #grabs the ISBNs from the cart db and puts them in a list alongside their quantities
 
         query = ("SELECT * FROM Cart WHERE userID =?")
         data = (userID)
         cursor.execute(query,(str(userID),))
         result = cursor.fetchall()
-        print(result)
+
        #uses the grab bed isbn values to get the correct rows from the inventory class
-        #invquery = ("SELECT * FROM Inventory WHERE ISBN =?")
-        invres = []
         for x in result:
-            print(x)
             invquery = ("SELECT * FROM Inventory WHERE ISBN =?")
             invdata = (x[1])
             invcursor.execute(invquery,(str(invdata),))
             invres += invcursor.fetchall()
             
-        print(invres)
-       # invcursor.execute(invquery,invdata)
-        
 
-
-        ###SELECT * FROM Books JOIN Cart ON Books.ISBN =Cart.ISBN
 
         #with the isbn list, use code from inventory.py to see the actual data of what the isbns are books of and also relay their
-        #quantity. x[0] should be isbn and x[1] should be quantity
+        #quantity.
         for x, y in zip(invres,result):
             print(f"Title: {x[1]}, ISBN: {x[0]}, Quantity: {y[2]}")    
 
@@ -171,7 +161,6 @@ class Cart:
         invdata = (userID)
         cursor.execute(invquery,(str(userID),))
         result = cursor.fetchall()
-        print(result)
         I = Inventory.Inventory("Inventory.db","Inventory")
         for x in result:
             I.decreaseStock(str(x[0]),)
