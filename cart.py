@@ -50,23 +50,32 @@ class Cart:
 
         #grabs the ISBNs from the cart db and puts them in a list alongside their quantities
 
-        query = ("SELECT ISBN, Quantity FROM Cart WHERE userID =?")
+        query = ("SELECT * FROM Cart WHERE userID =?")
         data = (userID)
-        cursor.execute(query,data)
+        cursor.execute(query,(str(userID),))
         result = cursor.fetchall()
+        print(result)
        #uses the grab bed isbn values to get the correct rows from the inventory class
-        invquery = ("SELECT * FROM Inventory WHERE ISBN IN (SELECT ISBN, Quantity FROM Cart WHERE userID =?)")
-        invdata = (userID)
-        invcursor.execute(invquery,invdata)
-        invresult = invcursor.fetchall()
+        #invquery = ("SELECT * FROM Inventory WHERE ISBN =?")
+        invres = []
+        for x in result:
+            print(x)
+            invquery = ("SELECT * FROM Inventory WHERE ISBN =?")
+            invdata = (x[1])
+            invcursor.execute(invquery,(str(invdata),))
+            invres += invcursor.fetchall()
+            
+        print(invres)
+       # invcursor.execute(invquery,invdata)
+        
 
 
         ###SELECT * FROM Books JOIN Cart ON Books.ISBN =Cart.ISBN
 
         #with the isbn list, use code from inventory.py to see the actual data of what the isbns are books of and also relay their
         #quantity. x[0] should be isbn and x[1] should be quantity
-        for x in result:
-            print(f"Title:  {x[0]},{x[1]}")    
+        for x, y in zip(invres,result):
+            print(f"Title: {x[1]}, ISBN: {x[0]}, Quantity: {y[2]}")    
 
 
         cursor.close()
@@ -160,19 +169,19 @@ class Cart:
 
         invquery = ("SELECT ISBN FROM Cart WHERE userID =?")
         invdata = (userID)
-        cursor.execute(invquery,invdata)
+        cursor.execute(invquery,(str(userID),))
         result = cursor.fetchall()
+        print(result)
         I = Inventory.Inventory("Inventory.db","Inventory")
         for x in result:
-            I.decreaseStock(x[0])
+            I.decreaseStock(str(x[0]),)
 
         
 
         query = "DELETE FROM Cart WHERE userID = ?"
-        data = userID
 
         ## sends query and data
-        cursor.execute(query, data,)
+        cursor.execute(query, (str(userID),))
 
         ## commits change
         connection.commit()
