@@ -63,10 +63,14 @@ class User:
             password = input("Password: ")
             #Checks if password is already in use
             while passwordCheck == True:
+                passwordCheck = False
                 cursor = connection.cursor()
-                cursor.execute(f"SELECT Password FROM Users")
+                cursor.execute("SELECT Password FROM Users")
                 result = cursor.fetchall()
-                passwordCheck = password in result
+                for x in result:
+                    if password == x[0]:
+                        passwordCheck = True
+                        break
                 if passwordCheck:
                     password = input("Password taken. Please create a different password: ")
         
