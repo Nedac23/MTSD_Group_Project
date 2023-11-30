@@ -1,6 +1,6 @@
 from Inventory import *
-import User import *
-import Cart import *
+from User import *
+from Cart import *
 
 #class declaration
 I = Inventory("Inventory.db","Inventory")
