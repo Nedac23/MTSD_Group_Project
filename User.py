@@ -106,7 +106,7 @@ class User:
         cursor.execute(query,data)
         result = cursor.fetchall()
         #stores the userID to the class
-        self.userID = result[0]
+        self.userID = result[0].replace("(","").replace(",","").replace(")","")
         
         #closes the cursor and connection
         cursor.close()
@@ -126,11 +126,7 @@ class User:
 
         cursor = connection.cursor()
 
-        ID = str(self.userID)
-        
-        query = "SELECT * FROM Users WHERE UserID= ?"
-        data = (ID,)
-        cursor.execute(query, data)
+        cursor.execute(f"SELECT * FROM Users WHERE UserID= {self.userID}")
         
         #Gets the results of the query
         result = cursor.fetchall()
@@ -173,7 +169,7 @@ class User:
             result = cursor.fetchall()
             
             #stores the userID to the class
-            self.userID = result[0]
+            self.userID = result[0].replace("(","").replace(",","").replace(")","")
             
         except:
             print("Email or Password is incorrect.")
