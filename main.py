@@ -1,11 +1,11 @@
-from Inventory import *
-from User import *
-from Cart import *
+import Inventory
+import User
+import Cart
 
 #class declaration
-I = Inventory("Inventory.db","Inventory")
-C = Cart("Cart.db","Cart")
-user = User("User.db", "Users")
+I = Inventory.Inventory("Inventory.db","Inventory")
+C = cart.Cart("Cart.db","Cart")
+user = User.User("User.db", "Users")
 
 closed = False
 #Before Login
@@ -25,10 +25,14 @@ while True:
     elif user_input == "1":
         if not user.login():
             print("Login failed.")
-        continue
+            continue
+        else:
+            print("Login successful.")
+            break
             
     elif user_input == "2":
         user.createAccount()
+        break
             
     else:
         print("Invalid menu option. Please try again.")
