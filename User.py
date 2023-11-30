@@ -126,19 +126,21 @@ class User:
 
         cursor = connection.cursor()
 
-        query = "SELECT * FROM Users WHERE UserID LIKE ?"
-        data = (self.userID,)
+        ID = str(self.userID)
+        
+        query = "SELECT * FROM Users WHERE UserID= ?"
+        data = (ID,)
         cursor.execute(query, data)
         
         #Gets the results of the query
         result = cursor.fetchall()
         #prints the results
         for x in result:
-            print(f"""Name: {x[2]} {x[3]}
-                  Email: {x[0]}
-                  Password: {x[1]}
-                  Address: {x[4]}, {x[5]}, {x[6]}, {x[7]}
-                  Payment: {x[8]} \n""")
+            print(f"""Name: {x[3]} {x[4]}
+                  Email: {x[1]}
+                  Password: {x[2]}
+                  Address: {x[5]}, {x[6]}, {x[7]}, {x[8]}
+                  Payment: {x[9]} \n""")
             
         #closes the cursor and connection
         cursor.close()
