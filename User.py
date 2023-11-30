@@ -170,7 +170,8 @@ class User:
             result = cursor.fetchall()
             
             #stores the userID to the class
-            self.userID = result[0].replace("(","").replace(",","").replace(")","")
+            for x in result:
+                self.userID = x[0]
             
         except:
             print("Email or Password is incorrect.")
