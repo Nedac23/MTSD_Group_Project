@@ -1,6 +1,6 @@
-import Inventory
-import User
-import Cart  #also looking at her python example file she imported it as ->>    from {classname} import *
+from Inventory import *
+import User import *
+import Cart import *
 
 #class declaration
 I = Inventory("Inventory.db","Inventory")
@@ -24,7 +24,7 @@ while True:
         
     elif user_input == "1":
         if not user.login():
-        print("Login failed.")
+            print("Login failed.")
         continue
             
     elif user_input == "2":
