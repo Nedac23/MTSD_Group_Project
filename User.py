@@ -133,11 +133,7 @@ class User:
         result = cursor.fetchall()
         #prints the results
         for x in result:
-            print(f"""Name: {x[3]} {x[4]}
-                  Email: {x[1]}
-                  Password: {x[2]}
-                  Address: {x[5]}, {x[6]}, {x[7]}, {x[8]}
-                  Payment: {x[9]} \n""")
+            print(f"""Name: {x[3]} {x[4]}\nEmail: {x[1]}\nPassword: {x[2]}\nAddress: {x[5]}, {x[6]}, {x[7]}, {x[8]}\nPayment: {x[9]} \n""")
             
         #closes the cursor and connection
         cursor.close()
