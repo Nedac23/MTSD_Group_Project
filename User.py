@@ -125,8 +125,10 @@ class User:
             sys.exit()
 
         cursor = connection.cursor()
-        
-        cursor.execute(f"SELECT * FROM Users WHERE UserID LIKE \"{self.userID}\"")
+
+        query = "SELECT * FROM Users WHERE UserID LIKE ?"
+        data = (self.userID,)
+        cursor.execute(query, data)
         
         #Gets the results of the query
         result = cursor.fetchall()
