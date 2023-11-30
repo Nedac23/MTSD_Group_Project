@@ -24,10 +24,10 @@ class Cart:
         try:
             connection = sqlite3.connect(self.database)
 
-            print("Successful connection.")
+            print("Successful connection. Cart")
 
         except:
-            print("Failed connection.")
+            print("Failed connection. Cart")
 
             sys.exit()
 
@@ -35,10 +35,10 @@ class Cart:
         try:
             invconnection = sqlite3.connect(invdatabase)
 
-            print("Successful connection.")
+            print("Successful connection. INV")
 
         except:
-            print("Failed connection.")
+            print("Failed connection. INV")
 
             sys.exit()
 
@@ -54,9 +54,9 @@ class Cart:
         data = (userID)
         cursor.execute(query,data)
         result = cursor.fetchall()
-        #uses the grabbed isbn values to get the correct rows from the inventory class
-        invquery = ("SELECT * FROM Inventory WHERE ISBN =?")
-        invdata = (result[0])
+       #uses the grab bed isbn values to get the correct rows from the inventory class
+        invquery = ("SELECT * FROM Inventory WHERE ISBN IN (SELECT ISBN, Quantity FROM Cart WHERE userID =?)")
+        invdata = (userID)
         invcursor.execute(invquery,invdata)
         invresult = invcursor.fetchall()
 
@@ -74,7 +74,7 @@ class Cart:
         connection.close()
         invconnection.close()
 
-    def addtocart(self, userID="", ISBN=""):
+    def addtocart(self, userID, ISBN):
         try:
             connection = sqlite3.connect(self.database)
 
@@ -84,23 +84,23 @@ class Cart:
             print("Failed connection.")
 
             sys.exit()
+        qvar = "1"
+        #fcursor = connection.cursor()
 
-        fcursor = connection.cursor()
-
-        fquery = ("SELECT Quantity WHERE userID and ISBN = ?")
-        fdata = (userID, ISBN)
-        fcursor.execute(fquery,fdata)
-        result = fcursor.fetchall
-        fcursor.close()
+        #fquery = ("SELECT Quantity WHERE userID =? AND ISBN =?")
+        #fdata = (userID,ISBN)
+        #fcursor.execute(fquery,fdata)
+        #result = fcursor.fetchall
+        #fcursor.close()
         cursor = connection.cursor()
-        if (result(0) > 0):
-            query = ("UPDATE cart SET Num =? Where ISBN =? and userId =?")
-            data = (result(0)+1,ISBN,userID)
-            cursor.execute(query,data)
-        else:
-            query = ("INSERT INTO Cart (userID, ISBN, Quantity) VALUES (?, ?, ?)")
-            data = (userID, ISBN, 1)
-            cursor.execute(query,data)
+        #if (result(0) > 0):
+        #    query = ("UPDATE cart SET Quantity =? Where ISBN =? and userId =?")
+        #    data = (result(0)+1,ISBN,userID)
+        #    cursor.execute(query,data)
+        #else:
+        query = ("INSERT INTO Cart (userID, ISBN, Quantity) VALUES (?, ?, ?)")
+        data = (userID, ISBN, str(qvar))
+        cursor.execute("INSERT INTO Cart (userID, ISBN, Quantity) VALUES (?, ?, ?)",(str(userID),str(ISBN),str(qvar),))
 
         connection.commit()
 
@@ -127,7 +127,7 @@ class Cart:
         query = "DELETE FROM Cart WHERE userID = ? AND ISBN = ?"
 
 
-        data = (userID, ISBN,)
+        data = (str(userID), str(ISBN),)
 
         ## sends query and data
         cursor.execute(query, data)
@@ -162,9 +162,9 @@ class Cart:
         invdata = (userID)
         cursor.execute(invquery,invdata)
         result = cursor.fetchall()
-        inv = Inventory()
+        I = Inventory.Inventory("Inventory.db","Inventory")
         for x in result:
-            inv.decreaseStock(x[0])
+            I.decreaseStock(x[0])
 
         
 
@@ -172,7 +172,7 @@ class Cart:
         data = userID
 
         ## sends query and data
-        cursor.execute(query, data)
+        cursor.execute(query, data,)
 
         ## commits change
         connection.commit()
