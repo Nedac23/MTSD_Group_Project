@@ -7,7 +7,7 @@ I = Inventory.Inventory("Inventory.db","Inventory")
 C = cart.Cart("Cart.db","Cart")
 user = User.User("User.db", "Users")
 
-closed = False
+loggedin = False
 #Before Login
 while True:
     print("""1. Log In to an Existing Account
@@ -28,67 +28,66 @@ while True:
             continue
         else:
             print("Login successful.")
-            break
+            loggedin = True
+            
             
     elif user_input == "2":
         user.createAccount()
-        break
+        loggedin = True
             
     else:
         print("Invalid menu option. Please try again.")
+    if loggedin:
+        while True:
+            print("""1. Logout
+                2. View Account Information
+                3. Inventory Information
+                4. Cart Information
+                \n""")
+            #gets user input for menuing
+            menu_option = input("Please select a menu option:")
 
-#After Login Menu
+            #logs the user out of the site
+            if menu_option == "1":
+                user.logout()
+                loggedin = False
+                break
+            
+            #views the information of the user
+            if menu_option == "2":
+                user.viewAccountInformation()
 
-#if statement to make sure user is logged in or made an account
-if not closed:
-    while True:
-        print("""1. Logout
-            2. View Account Information
-            3. Inventory Information
-            4. Cart Information
-            \n""")
-        #gets user input for menuing
-        menu_option = input("Please select a menu option:")
-
-        #logs the user out of the site
-        if menu_option == "1":
-            user.logout()
-            break
-        
-        #views the information of the user
-        if menu_option == "2":
-            user.viewAccountInformation()
-
-        #menu option for inventory information
-        if menu_option == "3":
-            #After Login
-            option = input("Please select a menu option:\n(0) View Inventory\n(1) Search Inventory\n(2) Go Back:  ")
-            while option != "2":
-
-                #option = input("Please select a menu option:\n (0) View Inventory\n(1) Search Inventory:  ")
-                if option == "0":
-                    I.viewInventory()
-                elif option == "1":
-                    I.searchInventory()
+            #menu option for inventory information
+            if menu_option == "3":
+                #After Login
                 option = input("Please select a menu option:\n(0) View Inventory\n(1) Search Inventory\n(2) Go Back:  ")
+                while option != "2":
 
-        if menu_option == "4":
-            #AFTER LOGIN -- CART INFO
+                    #option = input("Please select a menu option:\n (0) View Inventory\n(1) Search Inventory:  ")
+                    if option == "0":
+                        I.viewInventory()
+                    elif option == "1":
+                        I.searchInventory()
+                    option = input("Please select a menu option:\n(0) View Inventory\n(1) Search Inventory\n(2) Go Back:  ")
 
-            cartoptions = input("Please select a menu option:\n(0) View Cart\n(1) Add Items to Cart\n(2) Remove an Item from Cart\n(3) Check Out\n(4) Go Back: ")
-            while cartoptions != "4":
-                if cartoptions == "0":
-                    C.viewcart(user.userID,I.databaseName)
-                    break
-                elif cartoptions == "1":
-                    ad = input("Please type ISBN of book: ")
-                    C.addtocart(user.userID, ad)
-                    break
-                elif cartoptions == "2":
-                    re = input("Please type ISBN of book: ")
-                    C.removefromcart(user.userID, re)
-                    break
-                elif cartoptions == "3":
-                    C.checkout(user.userID)
-                    break
+            if menu_option == "4":
+                #AFTER LOGIN -- CART INFO
+
+                cartoptions = input("Please select a menu option:\n(0) View Cart\n(1) Add Items to Cart\n(2) Remove an Item from Cart\n(3) Check Out\n(4) Go Back: ")
+                while cartoptions != "4":
+                    if cartoptions == "0":
+                        C.viewcart(user.userID,I.databaseName)
+                        break
+                    elif cartoptions == "1":
+                        ad = input("Please type ISBN of book: ")
+                        C.addtocart(user.userID, ad)
+                        break
+                    elif cartoptions == "2":
+                        re = input("Please type ISBN of book: ")
+                        C.removefromcart(user.userID, re)
+                        break
+                    elif cartoptions == "3":
+                        C.checkout(user.userID)
+                        break
+
 
