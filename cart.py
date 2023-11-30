@@ -54,6 +54,7 @@ class Cart:
         result = cursor.fetchall()
 
        #uses the grab bed isbn values to get the correct rows from the inventory class
+        invres = []
         for x in result:
             invquery = ("SELECT * FROM Inventory WHERE ISBN =?")
             invdata = (x[1])
